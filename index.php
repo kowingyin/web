@@ -7,4 +7,6 @@
 		echo $rc['type']. '<br>';
 	}
 	
+	printAsTable2('category','*');
+	
 ?>

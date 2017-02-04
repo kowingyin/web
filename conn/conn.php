@@ -26,8 +26,8 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	$colLengthOfColArr = count($colArr);	//	the length of $colArr
 	$sql = 'SELECT ';
 	for ($i=0; $i < $colLengthOfColArr; $i++) {
-		$sql += $colArr[i];
-		if ($colLengthOfColArr-1 != i) {
+		$sql += $colArr[$i];
+		if ($colLengthOfColArr-1 != $i) {
 			$sql += ', ';
 		}
 	}
@@ -59,14 +59,14 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	*/
 	function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
-		$sql = sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null)
+		$sql = sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
 
 		$result = mysqli_query($conn, $sql) or die('Mysql error');
-		$return = '<table class="table table-hover">'
+		$return = '<table class="table table-hover">';
 
 
 		while($row = mysqli_fetch_array($result)){
-			$return '<tr><td>'.$row[0].'</td></tr>';
+			$return += '<tr><td>'.$row[0].'</td></tr>';
 		}
 		mysqli_free_result($result);
 		mysqli_close($conn);
@@ -76,7 +76,8 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	}
 ?>
 <?php
-function printAsTable($tableName, $colArr){
+function printAsTable2($tableName, $colArr){
 	printAsTable($tableName, $colArr, null, null, null);
+	
 }
  ?>
