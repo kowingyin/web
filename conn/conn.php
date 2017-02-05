@@ -7,12 +7,11 @@ class Database{
 	private $conn;
 
 	public function __construct(){
-
-		$hostname = '127.0.0.1';
-		$username = 'root';
-		$pwd = '';
-		$db = 'fyp';
-		$this->conn = mysqli_connect($hostname, $username, $pwd, $db)	or die(mysqli_connect_error());
+		self::$hostname = '127.0.0.1';
+		self::$username = 'root';
+		self::$pwd = '';
+		self::$db = 'fyp';
+		$this->conn = mysqli_connect(self::$hostname, self::$username, self::$pwd, self::$db)	or die(mysqli_connect_error());
 		mysqli_query($this->conn,'SET NAMES UTF8');//chinese
 		mysqli_query($this->conn, 'Asia/Hong_Kong	');
 	}
@@ -65,20 +64,36 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 	*/
 	public function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
-		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
-		echo $sql.'<br />';
-		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
+
 
 		$return = '<table class="table table-hover">';
 
+		//	get column names
+		$sql = $this->sqlSelect('INFORMATION_SCHEMA.COLUMNS', ['COLUMN_NAME'], null, null, null, 'WHERE TABLE_SCHEMA="'.self::$db.'"
+    AND TABLE_NAME="'.$tableName.'"', null, null, null, null);
+		echo $sql;
+		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
+		$return .= '<tr>';
+		while($row = mysqli_fetch_array($result)){
+			$return .= '<th>'.$row[0].'</th>';
+		}
+		$return .= '</tr>';
+		//	 end of get column names
+
+		//	get table's data
+		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
+		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		while($row = mysqli_fetch_array($result)){
 			$return .= '<tr><td>'.$row[0].'</td></tr>';
 		}
 		$return .= '</table>';
+		//	end of get table's data
 
+		//	release connection
 		$this->closeSqlConn($result);
 		return $return;
 	}
+
 public function printAsTableShort($tableName, $colArr){
 	printAsTable($tableName, $colArr, null, null, null);
 
