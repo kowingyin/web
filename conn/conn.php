@@ -3,6 +3,7 @@
 	$username = 'root';
 	$pwd = '';
 	$db = 'fyp';
+	static $conn;
 
 	$conn = mysqli_connect($hostname, $username, $pwd, $db)
 	or die(mysqli_connect_error());
@@ -60,7 +61,8 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
 		$sql = sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
-
+		
+		
 		$result = mysqli_query($conn, $sql) or die('Mysql error');
 		$return = '<table class="table table-hover">';
 

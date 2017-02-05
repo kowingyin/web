@@ -53,7 +53,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 <?php
-	
+	require_once('../conn/conn.php');
+	printAsTable('location', ['*'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
 ?>
 
 </body>
