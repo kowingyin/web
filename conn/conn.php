@@ -64,8 +64,6 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 	*/
 	public function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
-
-
 		$return = '<table class="table table-hover">';
 
 		//	get column names
@@ -84,10 +82,17 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
 		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		while($row = mysqli_fetch_array($result)){
-			$return .= '<tr><td>'.$row[0].'</td></tr>';
+			$return .= '<tr>';
+			$i = 0;
+			while ($i < $result->lengths) {
+				echo $result->lengths;
+				$return .= '<td>'.$row[$i].'</td>';
+				++$i;
+			}
+			$return .= '</tr>';
 		}
-		$return .= '</table>';
 		//	end of get table's data
+		$return .= '</table>';
 
 		//	release connection
 		$this->closeSqlConn($result);
