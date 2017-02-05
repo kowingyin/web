@@ -43,10 +43,11 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	$sql += ($where)?$where:'';
 	$sql += ($group)?$group:'';
 	$sql += ($order)?$order:'';
-	if (!isset($startRow) && $endRow) {
+	if (!$startRow && $endRow) {
 		$startRow = 0;
 	}
 	$sql += ($endRow)?'LIMIT '.$startRow.', '.$endRow:'';
+	echo '<script>console.log('.$sql.')</script>';
 	return $sql;
 }
  ?>
@@ -59,19 +60,18 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	*/
 	function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
-		$sql = sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null)
+		$sql = sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
 
 		$result = mysqli_query($conn, $sql) or die('Mysql error');
-		$return = '<table class="table table-hover">'
+		$return = '<table class="table table-hover">';
 
 
 		while($row = mysqli_fetch_array($result)){
 			$return '<tr><td>'.$row[0].'</td></tr>';
 		}
-		mysqli_free_result($result);
-		mysqli_close($conn);
-
 		$return += '</table>';
+
+		closeSqlConn($result);
 		return $return;
 	}
 ?>
@@ -80,3 +80,9 @@ function printAsTable($tableName, $colArr){
 	printAsTable($tableName, $colArr, null, null, null);
 }
  ?>
+ <?php
+ function closeSqlConn($result){
+	 mysqli_free_result($result);
+	 mysqli_close($conn);
+ }
+  ?>
