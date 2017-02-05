@@ -3,6 +3,7 @@
 	$username = 'root';
 	$pwd = '';
 	$db = 'fyp';
+	static $conn;
 
 	$conn = mysqli_connect($hostname, $username, $pwd, $db)
 	or die(mysqli_connect_error());
@@ -26,8 +27,8 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 	$colLengthOfColArr = count($colArr);	//	the length of $colArr
 	$sql = 'SELECT ';
 	for ($i=0; $i < $colLengthOfColArr; $i++) {
-		$sql += $colArr[i];
-		if ($colLengthOfColArr-1 != i) {
+		$sql += $colArr[$i];
+		if ($colLengthOfColArr-1 != $i) {
 			$sql += ', ';
 		}
 	}
@@ -67,7 +68,7 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 
 
 		while($row = mysqli_fetch_array($result)){
-			$return '<tr><td>'.$row[0].'</td></tr>';
+			$return += '<tr><td>'.$row[0].'</td></tr>';
 		}
 		$return += '</table>';
 
@@ -78,6 +79,7 @@ function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOrigina
 <?php
 function printAsTable($tableName, $colArr){
 	printAsTable($tableName, $colArr, null, null, null);
+
 }
  ?>
  <?php
