@@ -54,7 +54,8 @@
 </nav>
 <?php
 	require_once('../conn/conn.php');
-	printAsTable('location', ['*'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
+	$table = new connection();
+	echo $table->printAsTable('location', ['*'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
 ?>
 
 </body>
