@@ -94,8 +94,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		//	end of get table's data
 		$return .= '</table>';
 
-		//	release connection
-		$this->closeSqlConn($result);
+		
 		return $return;
 	}
 
