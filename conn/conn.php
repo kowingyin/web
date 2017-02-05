@@ -1,5 +1,5 @@
 <?php
-class connection{
+class Database{
 	private  static $hostname;
 	private  static $username;
 	private  static $pwd;
