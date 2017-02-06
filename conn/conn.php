@@ -64,6 +64,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 	*/
 	public function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
+		$colLength;
 		$return = '<table class="table table-hover">';
 
 		//	get column names
@@ -72,6 +73,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		echo $sql;
 		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		$return .= '<tr>';
+		$colLength = mysqli_num_rows($result);
 		while($row = mysqli_fetch_array($result)){
 			$return .= '<th>'.$row[0].'</th>';
 		}
@@ -80,12 +82,13 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 
 		//	get table's data
 		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
+		echo '<br />'.$sql;
 		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
+		echo '<br />col length check'.$colLength;
 		while($row = mysqli_fetch_array($result)){
 			$return .= '<tr>';
 			$i = 0;
-			while ($i < $result->lengths) {
-				echo $result->lengths;
+			while ($i < $colLength) {
 				$return .= '<td>'.$row[$i].'</td>';
 				++$i;
 			}
@@ -94,7 +97,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		//	end of get table's data
 		$return .= '</table>';
 
-		
+
 		return $return;
 	}
 
