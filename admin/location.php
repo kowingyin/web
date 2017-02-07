@@ -55,7 +55,7 @@
 <?php
 	require_once('../conn/conn.php');
 	$table = new Database();
-	echo $table->printAsTable('location', ['*'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
+	echo $table->printAsTable('location', ['lid', 'cname', 'ename', 'photoName', 'description', 'edescription', 'category.type', 'district.name'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
 	//	release connection
 	$table->closeSqlConn($result);
 ?>
