@@ -1,3 +1,3 @@
 function addEditButton(){
-  $('tr').append('<td><button>Edit</button></td>');
+  $('tr:not(:first-child)').append('<td><button>Edit</button></td>');
 }

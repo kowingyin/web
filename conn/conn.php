@@ -5,6 +5,7 @@ class Database{
 	private  static $pwd;
 	private  static $db;
 	private $conn;
+	private $result;
 
 	public function __construct(){
 		self::$hostname = '127.0.0.1';
@@ -71,10 +72,10 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		$sql = $this->sqlSelect('INFORMATION_SCHEMA.COLUMNS', ['COLUMN_NAME'], null, null, null, 'WHERE TABLE_SCHEMA="'.self::$db.'"
     AND TABLE_NAME="'.$tableName.'"', null, null, null, null);
 		echo $sql;
-		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
+		$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		$return .= '<tr>';
-		$colLength = mysqli_num_rows($result);
-		while($row = mysqli_fetch_array($result)){
+		$colLength = mysqli_num_rows($this->result);
+		while($row = mysqli_fetch_array($this->result)){
 			$return .= '<th>'.$row[0].'</th>';
 		}
 		$return .= '</tr>';
@@ -83,9 +84,9 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		//	get table's data
 		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
 		echo '<br />'.$sql;
-		$result = mysqli_query($this->conn, $sql) or die('Mysql error');
+		$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		echo '<br />col length check'.$colLength;
-		while($row = mysqli_fetch_array($result)){
+		while($row = mysqli_fetch_array($this->result)){
 			$return .= '<tr>';
 			$i = 0;
 			while ($i < $colLength) {
@@ -105,8 +106,8 @@ public function printAsTableShort($tableName, $colArr){
 	printAsTable($tableName, $colArr, null, null, null);
 
 }
- public function closeSqlConn($result){
-	 mysqli_free_result($result);
+ public function closeSqlConn(){
+	 mysqli_free_result($this->result);
 	 mysqli_close($this->conn);
  }
 

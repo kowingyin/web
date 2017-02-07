@@ -57,13 +57,15 @@
 	$table = new Database();
 	echo $table->printAsTable('location', ['lid', 'cname', 'ename', 'photoName', 'description', 'edescription', 'category.type', 'district.name'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
 	//	release connection
-	$table->closeSqlConn($result);
+	$table->closeSqlConn();
 ?>
 
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="js/tableButtonListener.js">
+</script>
 <script>
 $(document).ready(function(){
 	$('li').mouseenter(function(){
@@ -72,6 +74,7 @@ $(document).ready(function(){
 	$('li').mouseleave(function(){
 		$(this).removeClass('active')
 	})
+	addEditButton()
 
 })
 </script>
