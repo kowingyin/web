@@ -66,6 +66,8 @@
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="js/tableButtonListener.js">
 </script>
+<script src="js/location.js">
+</script>
 <script>
 $(document).ready(function(){
 	$('li').mouseenter(function(){
@@ -75,7 +77,7 @@ $(document).ready(function(){
 		$(this).removeClass('active')
 	})
 	addEditButton()
-
+	tr2Form()
 })
 </script>
 </html>
