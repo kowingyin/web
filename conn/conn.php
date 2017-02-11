@@ -53,7 +53,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 	$sql .= (isset($order))?$order:'';
 	if (!isset($startRow) && isset($endRow)) {
 		$startRow = 0;
-		$sql .= 'LIMIT '.$startRow.', '.$endRow;
+		$sql .= ' LIMIT '.$startRow.', '.$endRow;
 	}
 	return $sql;
 }
@@ -82,7 +82,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		//	 end of get column names
 
 		//	get table's data
-		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, null);
+		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, 20);	// remove 20 when demo
 		echo '<br />'.$sql;
 		$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		echo '<br />col length check'.$colLength;
