@@ -55,7 +55,7 @@
 <?php
 	require_once('../conn/conn.php');
 	$table = new Database();
-	echo $table->printAsTable('location', ['lid', 'cname', 'ename', 'photoName', 'description', 'edescription', 'category.type', 'district.name'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
+	echo $table->printAsTable('location', ['location.lid', 'location.cname', 'location.ename', 'location.photoName', 'location.description', 'location.edescription', 'category.type', 'district.name'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
 	//	release connection
 	$table->closeSqlConn();
 ?>
@@ -64,20 +64,8 @@
 
 <script src="../js/jquery-3.1.1.slim.min.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="js/tableButtonListener.js">
+<script src="js/addEditButton.js">
 </script>
 <script src="js/location.js">
-</script>
-<script>
-$(document).ready(function(){
-	$('li').mouseenter(function(){
-		$(this).addClass('active')
-	})
-	$('li').mouseleave(function(){
-		$(this).removeClass('active')
-	})
-	addEditButton()
-	tr2Form()
-})
 </script>
 </html>

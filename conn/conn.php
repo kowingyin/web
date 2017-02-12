@@ -65,27 +65,32 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 	*/
 	public function printAsTable($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol){
 		$return = '';
-		$colLength;
+		$colLength = count($colArr);
 		$return = '<table class="table table-hover">';
 
 		//	get column names
-		$sql = $this->sqlSelect('INFORMATION_SCHEMA.COLUMNS', ['COLUMN_NAME'], null, null, null, 'WHERE TABLE_SCHEMA="'.self::$db.'"
-    AND TABLE_NAME="'.$tableName.'"', null, null, null, null);
-		echo $sql;
-		$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
+	// 	$sql = $this->sqlSelect('INFORMATION_SCHEMA.COLUMNS', ['COLUMN_NAME'], null, null, null, 'WHERE TABLE_SCHEMA="'.self::$db.'"
+    // AND TABLE_NAME="'.$tableName.'"', null, null, null, null);
+	// 	echo $sql;
+	// 	$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
+	// 	$return .= '<tr>';
+	// 	while($row = mysqli_fetch_array($this->result)){
+	// 		$return .= '<th>'.$row[0].'</th>';
+	// 	}
+	// 	$return .= '</tr>';
+		//	 end of get column names
+
 		$return .= '<tr>';
-		$colLength = mysqli_num_rows($this->result);
-		while($row = mysqli_fetch_array($this->result)){
-			$return .= '<th>'.$row[0].'</th>';
+		foreach ($colArr as $key) {
+			$return .= '<td>'.$key.'</td>';
 		}
 		$return .= '</tr>';
-		//	 end of get column names
 
 		//	get table's data
 		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, 20);	// remove 20 when demo
 		echo '<br />'.$sql;
 		$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
-		echo '<br />col length check'.$colLength;
+		echo '<br />th col length = '.$colLength;
 		while($row = mysqli_fetch_array($this->result)){
 			$return .= '<tr>';
 			$i = 0;
