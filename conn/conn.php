@@ -126,7 +126,7 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		//	get content
 		$sql = $this->sqlSelect($tableName, [$primaryKey, $col], null, null, null, null, null, null, null, null);
 		$result = mysqli_query($this->conn, $sql);
-		$return .= '<select name="'.$tableName.'">';
+		$return .= '<select id="'.$tableName.'" name="'.$tableName.'">';
 		while($row = mysqli_fetch_array($result)){
 			$return .= '<option value="'.$row[0].'">
 			'.$row[1].'</option>';
