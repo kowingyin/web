@@ -68,23 +68,15 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		$colLength = count($colArr);
 		$return = '<table class="table table-hover">';
 
-		//	get column names
-	// 	$sql = $this->sqlSelect('INFORMATION_SCHEMA.COLUMNS', ['COLUMN_NAME'], null, null, null, 'WHERE TABLE_SCHEMA="'.self::$db.'"
-    // AND TABLE_NAME="'.$tableName.'"', null, null, null, null);
-	// 	echo $sql;
-	// 	$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
-	// 	$return .= '<tr>';
-	// 	while($row = mysqli_fetch_array($this->result)){
-	// 		$return .= '<th>'.$row[0].'</th>';
-	// 	}
-	// 	$return .= '</tr>';
-		//	 end of get column names
 
+
+		//	get column names
 		$return .= '<tr>';
 		foreach ($colArr as $key) {
 			$return .= '<td>'.$key.'</td>';
 		}
 		$return .= '</tr>';
+		//	 end of get column names
 
 		//	get table's data
 		$sql = $this->sqlSelect($tableName, $colArr, $joinTable, $joinCol, $joinOriginalCol, null, null, null, null, 20);	// remove 20 when demo
@@ -92,12 +84,19 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		$this->result = mysqli_query($this->conn, $sql) or die('Mysql error');
 		echo '<br />th col length = '.$colLength;
 		while($row = mysqli_fetch_array($this->result)){
-			$return .= '<tr>';
 			$i = 0;
+			$return .= '<tr>';
+
 			while ($i < $colLength) {
-				$return .= '<td>'.$row[$i].'</td>';
+				$return .= '<td class="td">'.$row[$i].'</td>';
 				++$i;
 			}
+			$return .= '<td><a class="btn btn-primary modalbox" href="#inline">Edit</a></td>';
+			$return .= '</div>';
+	// 		<div id="wrapper">
+	// <p>Send us feedback from the modal window.</p>
+	//
+	// <p><a class="modalbox" href="#inline">click to open</a></p>
 			$return .= '</tr>';
 		}
 		//	end of get table's data
@@ -107,14 +106,40 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		return $return;
 	}
 
-public function printAsTableShort($tableName, $colArr){
-	printAsTable($tableName, $colArr, null, null, null);
+	public function printAsTableShort($tableName, $colArr){
+		printAsTable($tableName, $colArr, null, null, null);
+	}
+	public function printAsSelectionBox($tableName, $col){
+		$return = '';
+		$primaryKey = '';
 
-}
- public function closeSqlConn(){
-	 mysqli_free_result($this->result);
-	 mysqli_close($this->conn);
- }
+		//	start get primary key
+		$sql = "SHOW KEYS FROM $tableName WHERE Key_name = 'PRIMARY'";
+		// echo $sql;
+		$result = mysqli_query($this->conn, $sql);
+
+		while($row = mysqli_fetch_array($result)){
+			$primaryKey = $row['Column_name'];
+		}
+		//	end of getting primary key
+
+		//	get content
+		$sql = $this->sqlSelect($tableName, [$primaryKey, $col], null, null, null, null, null, null, null, null);
+		$result = mysqli_query($this->conn, $sql);
+		$return .= '<select name="'.$tableName.'">';
+		while($row = mysqli_fetch_array($result)){
+			$return .= '<option value="'.$row[0].'">
+			'.$row[1].'</option>';
+		}
+		$return .= '</select>';
+
+
+		return $return;
+	}
+	public function closeSqlConn(){
+		mysqli_free_result($this->result);
+		mysqli_close($this->conn);
+	}
 
 }
 
