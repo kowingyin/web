@@ -1,10 +1,10 @@
 var tableRow;
-var thisRowArr;
-var oldRowArr;
+var thisRowDataArr;
+var oldRowDataArr;
 
 console.log('location js is running');
 
-function editClick(){
+$(function(){
     $('.btn-primary').click(function(event) {
         tableRow = $(this).parent().parent()
         var arrayItem = []
@@ -16,15 +16,8 @@ function editClick(){
             })
         })
         arrayItem.pop()
-        thisRowArr = arrayItem;
-        console.log(thisRowArr);
-
-        transfer2Form()
+        thisRowDataArr = arrayItem;
+        console.log('this row is '+thisRowDataArr);
     })
 
-}
-
-function transfer2Form(){
-    tableRow.text();
-    console.log(tableRow.text());
-}
+})

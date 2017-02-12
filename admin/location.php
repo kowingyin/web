@@ -3,6 +3,9 @@
 <head>
 	<title>Manage location</title>
 	<link href="../bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="all" href="style.css">
+	<link rel="stylesheet" type="text/css" media="all" href="fancybox/jquery.fancybox.css">
+	<!-- <link href="./css/tableLike.css" rel='stylesheet' /> -->
 </head>
 <style>
 
@@ -56,16 +59,85 @@
 	require_once('../conn/conn.php');
 	$table = new Database();
 	echo $table->printAsTable('location', ['location.lid', 'location.cname', 'location.ename', 'location.photoName', 'location.description', 'location.edescription', 'category.type', 'district.name'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
-	//	release connection
-	$table->closeSqlConn();
 ?>
+<div id="inline">
+	<h2>Update data</h2>
+
+	<form id="contact" name="contact" action="#" method="post">
+		<label for="email">Your E-mail</label>
+		<input type="email" id="email" name="email" class="txt">
+		<br>
+		<label for="msg">Enter a Message</label>
+		<textarea id="msg" name="msg" class="txtarea"></textarea>
+		<label for="category">Category</label>
+		<?=$table->printAsSelectionBox('category', 'type')?>
+		<br />
+		<label for="district">District</label>
+		<?=$table->printAsSelectionBox('district', 'name')?>
+		<button id="send">Update</button>
+	</form>
+</div>
 
 </body>
 
-<script src="../js/jquery-3.1.1.slim.min.js"></script>
+<script src="../js/jquery-3.1.1.min.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="js/addEditButton.js">
 </script>
 <script src="js/location.js">
 </script>
+<script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.1.6"></script>
+<!-- basic fancybox setup -->
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".modalbox").fancybox();
+	$("#contact").submit(function() { return false; });
+
+
+	$("#send").on("click", function(){
+		var emailval  = $("#email").val();
+		var msgval    = $("#msg").val();
+		var msglen    = msgval.length;
+		var mailvalid = validateEmail(emailval);
+
+		if(mailvalid == false) {
+			$("#email").addClass("error");
+		}
+		else if(mailvalid == true){
+			$("#email").removeClass("error");
+		}
+
+		if(msglen < 4) {
+			$("#msg").addClass("error");
+		}
+		else if(msglen >= 4){
+			$("#msg").removeClass("error");
+		}
+
+		if(mailvalid == true && msglen >= 4) {
+			// if both validate we attempt to send the e-mail
+			// first we hide the submit btn so the user doesnt click twice
+			$("#send").replaceWith("<em>sending...</em>");
+
+			$.ajax({
+				type: 'POST',
+				url: 'sendmessage.php',
+				data: $("#contact").serialize(),
+				success: function(data) {
+					if(data == "true") {
+						$("#contact").fadeOut("fast", function(){
+							$(this).before("<p><strong>Success! :)</strong></p>");
+							setTimeout("$.fancybox.close()", 1000);
+						});
+					}
+				}
+			});
+		}
+	});
+});
+</script>
+<?php
+//	release connection
+$table->closeSqlConn();
+ ?>
 </html>
