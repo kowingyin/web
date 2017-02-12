@@ -82,10 +82,6 @@
 
 <script src="../js/jquery-3.1.1.min.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="js/addEditButton.js">
-</script>
-<script src="js/location.js">
-</script>
 <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.1.6"></script>
 <!-- basic fancybox setup -->
 <script type="text/javascript">
@@ -135,6 +131,10 @@ $(document).ready(function() {
 		}
 	});
 });
+</script>
+<script src="js/addEditButton.js">
+</script>
+<script src="js/location.js">
 </script>
 <?php
 //	release connection
