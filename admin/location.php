@@ -64,11 +64,19 @@
 	<h2>Update data</h2>
 
 	<form id="contact" name="contact" action="#" method="post">
-		<label for="email">Your E-mail</label>
-		<input type="email" id="email" name="email" class="txt">
-		<br>
-		<label for="msg">Enter a Message</label>
-		<textarea id="msg" name="msg" class="txtarea"></textarea>
+		<label for="primary">ID</label>
+		<input width="50px" type="text" name="primary" id="primary" readonly />
+		<label for="cname">Chinese name</label>
+		<input name="cname" id="cname" /><br>
+		<label for="ename">English name</label>
+		<input name="ename" id="ename" /><br>
+		<label for="photoName">Photo</label><br>
+		<img height="200" width="200" id="photo"/><br>
+		<input type="file" name="photoName" id="photoName" />
+		<label for="description">Chinese description</label>
+		<input type="textarea" id="description" name="description"/><br>
+		<label for="edescription">English description</label>
+		<input type="textarea" id="edescription" name="edescription"/><br>
 		<label for="category">Category</label>
 		<?=$table->printAsSelectionBox('category', 'type')?>
 		<br />
