@@ -47,7 +47,7 @@
       </ul>
       <form class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search">
+          <input type="text" class="form-control" placeholder="Search" id="searchBox">
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
@@ -90,7 +90,6 @@
 </div>
 
 </body>
-
 <script src="../js/jquery-3.1.1.min.js"></script>
 <script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="fancybox/jquery.fancybox.js?v=2.1.6"></script>
@@ -98,6 +97,7 @@
 </script>
 <script src="js/location.js">
 </script>
+
 <?php
 
 $_SESSION['tableName'] = 'location';

@@ -72,4 +72,9 @@ $(function() {
 
     });
     //  popup box
+	//searchBox jquery
+		$("#searchBox").keyup(function(){
+			$("tr:contains("+$("#searchBox").val()+")").show();
+			$("tr:not(:first):not(:contains("+$("#searchBox").val()+"))").hide(); //not first row
+		});
 })
