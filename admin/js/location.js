@@ -24,20 +24,24 @@ $(function(){
 
     function changeUpdateBoxValue(){
         $('option', $('#district')).each(function(index, el) {
-            // console.log(el.innerHTML.trim());
-            // console.log(thisRowDataArr[7]);
-            if(el.innerHTML.trim() == thisRowDataArr[7]){
-                // console.log('add selected');
+            let clearedString = el.innerHTML.trim()
+            if(clearedString == thisRowDataArr[7]){
+                console.log('el = '+clearedString+' thisRowDataArr = '+thisRowDataArr[7]);
                 $(el).attr('selected', 'selected');
             }
         });
         $('option', $('#category')).each(function(index, el) {
-            // console.log(el.innerHTML.trim());
-            // console.log(thisRowDataArr[7]);
-            if(el.innerHTML.trim() == thisRowDataArr[6]){
-                // console.log('add selected');
+            let clearedString = el.innerHTML.trim()
+            if(clearedString == thisRowDataArr[6]){
+                console.log('el = '+clearedString+' thisRowDataArr = '+thisRowDataArr[6]);
                 $(el).attr('selected', 'selected');
             }
         });
+        $('#primary').val(thisRowDataArr[0])
+        $('#cname').val(thisRowDataArr[1])
+        $('#ename').val(thisRowDataArr[2])
+        $('#photo').attr('src', '../img/'+thisRowDataArr[3])
+        $('#description').val(thisRowDataArr[4])
+        $('#edescription').val(thisRowDataArr[5])
     }
 })

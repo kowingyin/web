@@ -65,14 +65,14 @@
 
 	<form id="contact" name="contact" action="#" method="post">
 		<label for="primary">ID</label>
-		<input width="50px" type="text" name="primary" id="primary" readonly />
+		<input width="50px" type="text" name="primary" id="primary" readonly /><br>
 		<label for="cname">Chinese name</label>
 		<input name="cname" id="cname" /><br>
 		<label for="ename">English name</label>
 		<input name="ename" id="ename" /><br>
 		<label for="photoName">Photo</label><br>
 		<img height="200" width="200" id="photo"/><br>
-		<input type="file" name="photoName" id="photoName" />
+		<input type="file" name="photoName" id="photoName" /><br />
 		<label for="description">Chinese description</label>
 		<input type="textarea" id="description" name="description"/><br>
 		<label for="edescription">English description</label>
