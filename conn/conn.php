@@ -141,6 +141,10 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		mysqli_close($this->conn);
 	}
 
+	public function updateData($tableName, $colArr, $where){
+		
+	}
+
 }
 
 ?>
