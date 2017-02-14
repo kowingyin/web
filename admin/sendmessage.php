@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../conn/conn.php');
 $conn = new Database();
 
@@ -19,27 +20,14 @@ $description = $_POST['description'];
 $edescription = $_POST['edescription'];
 $category = $_POST['category'];
 $district = $_POST['district'];
-// $sendto   = "youremail@youremail.com";
-// $usermail = $_POST['email'];
-// $content  = nl2br($_POST['msg']);
-//
-// $subject  = "New Feedback Message";
-// $headers  = "From: " . strip_tags($usermail) . "\r\n";
-// $headers .= "Reply-To: ". strip_tags($usermail) . "\r\n";
-// $headers .= "MIME-Version: 1.0\r\n";
-// $headers .= "Content-Type: text/html;charset=utf-8 \r\n";
-//
-// $msg  = "<html><body style='font-family:Arial,sans-serif;'>";
-// $msg .= "<h2 style='font-weight:bold;border-bottom:1px dotted #ccc;'>New User Feedback</h2>\r\n";
-// $msg .= "<p><strong>Sent by:</strong> ".$usermail."</p>\r\n";
-// $msg .= "<p><strong>Message:</strong> ".$content."</p>\r\n";
-// $msg .= "</body></html>";
-//
-//
-// if(@mail($sendto, $subject, $msg, $headers)) {
-// 	echo "true";
-// } else {
-// 	echo "false";
+
+// if ($tableName == null ||
+// 	$primary == null ||
+// 	$cname == null ||
+// 	$ename == null) {
+// 	echo 'false';
 // }
+echo $tableName.'<br />';
+echo $conn->updateData($tableName, ['cname', 'ename', 'photoName', 'description', 'edescription', 'cid', 'did'], [$cname, $ename, $photoName, $description, $edescription, (int)$category, (int)$district], 'lid = '.$primary);
 
 ?>

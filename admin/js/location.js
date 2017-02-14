@@ -65,7 +65,8 @@ $(function() {
                         setTimeout("$.fancybox.close()", 1000);
                     });
                 }else{
-                    alert('Failed')
+                    // alert('Failed')
+                    alert(data);
                 }
             }
         });

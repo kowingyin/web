@@ -17,18 +17,7 @@ class Database{
 		mysqli_query($this->conn, 'Asia/Hong_Kong	');
 	}
 
-/*
-	$tableName = table name
-	$colArr = table's columns name are showed, also ['*'] can show all
-	$joinTableArr = the tables to be joined
-	$joinColArr = (optional)
-	$joinOriginalColArr = $tableName's column to be joined with $joinColArr, the position shoud be same as $joinColArr.		e.g. $joinColArr[0] == $joinOriginalColArr[0]
-	$whereArr = where condition
-	$groupArr = group condition
-	$order
-	$startRow = the starting point of the first row
-	$endRow = the ending point of the last row
-*/
+
 public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $joinOriginalColArr, $where, $group, $order, $startRow, $endRow){
 	$colLengthOfColArr = count($colArr);	//	the length of $colArr
 	$sql = 'SELECT ';
@@ -141,8 +130,37 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 		mysqli_close($this->conn);
 	}
 
-	public function updateData($tableName, $colArr, $where){
-		
+	/** $tableName = table name
+		$colArr = the cols would be updated
+		$dataArr = the flow is followed by $colArr
+	*/
+	public function updateData($tableName, $colArr, $dataArr, $where){
+		//	check is null
+		if (!$tableName || !$colArr || !$dataArr || !$where) {
+			return 0;
+		}
+		//	end of check is null
+
+		//	building  sql
+		$sql = 'UPDATE '.$tableName.' SET ';
+
+		$colLength = count($colArr);
+		for ($i=0; $i < $colLength; $i++) {
+			$sql .= $colArr[$i] .' = ';
+			//	check is string?
+			$sql .= (!is_int($colArr[$i]))?'"':'';
+			$sql .= $dataArr[$i];
+			$sql .= (!is_int($colArr[$i]))?'"':'';
+			if ($i < $colLength) {
+				$sql .= ', ';
+			}
+		}
+		$sql .= ($where)?' WHERE '.$where:'';
+		$sql .= ';';
+		return $sql;
+		//	end of building  sql
+
+
 	}
 
 }

@@ -21,7 +21,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Brand</a>
+      <a class="navbar-brand" href="#">Admin</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -32,39 +32,27 @@
         <li><a href="#">Location</a></li>
 		<li><a href="#">User Log</a></li>
 		<li><a href="#">Staff Log</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
+
       </ul>
       <form class="navbar-form navbar-left">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search" id="searchBox">
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <!-- <button type="submit" class="btn btn-default">Submit</button> -->
       </form>
 
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <?php
-	if(!($_SESSION)) {
-	    session_start();
-	}
+    session_start();
+
 	require_once('../conn/conn.php');
 	$table = new Database();
 	echo $table->printAsTable('location', ['location.lid', 'location.cname', 'location.ename', 'location.photoName', 'location.description', 'location.edescription', 'category.type', 'district.name'], ['category', 'district'], ['cid', 'did'], ['cid', 'did']);
 ?>
 <div id="inline">
-	<h2>Update data</h2>
+	<h2>Update data</h2><h2 style="font-size:12px;">Data won't change if there are any empty</h2>
 
 	<form id="contact" name="contact" action="#" method="post">
 		<label for="primary">ID</label>
@@ -77,9 +65,9 @@
 		<img height="200" width="200" id="photo"/><br>
 		<input type="file" name="photoName" id="photoName" accept="image/*" /><br />
 		<label for="description">Chinese description</label>
-		<input type="textarea" id="description" name="description"/><br>
+		<input class="txtarea" type="textarea" id="description" name="description"/><br>
 		<label for="edescription">English description</label>
-		<input type="textarea" id="edescription" name="edescription"/><br>
+		<input class="txtarea" type="textarea" id="edescription" name="edescription"/><br>
 		<label for="category">Category</label>
 		<?=$table->printAsSelectionBox('category', 'type')?>
 		<br />
@@ -101,6 +89,7 @@
 <?php
 
 $_SESSION['tableName'] = 'location';
+echo $_SESSION['tableName'];
 //	release connection
 $table->closeSqlConn();
  ?>
