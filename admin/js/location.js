@@ -54,34 +54,40 @@ $(function() {
 
         $("#send").after("<em id='send'>sending...</em>");
         $('#send').hide();
+        var formData = new FormData($(this).parent()[0]);
 
         $.ajax({
             type: 'POST',
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
             url: 'sendmessage.php',
-            data: $("#contact").serialize(),
+            data: formData,
+            // data: $("#contact").serialize(),
             success: function(data) {
                 if (data == "true") {
                     $("#contact").fadeOut("fast", function() {
                         $(this).before("<p><strong>Success! :)</strong></p>");
                         setTimeout("$.fancybox.close()", 1000);
                     });
-                }else{
+                } else {
                     // alert('Failed')
                     alert(data);
                     setTimeout("$.fancybox.close()", 1000);
                 }
             }
         });
-        setTimeout(function(){
+        setTimeout(function() {
             $("#send").show();
             $('#send').siblings('em').remove();
         }, 1000);
 
     });
     //  popup box
-	//searchBox jquery
-		$("#searchBox").keyup(function(){
-			$("tr:contains("+$("#searchBox").val()+")").show();
-			$("tr:not(:first):not(:contains("+$("#searchBox").val()+"))").hide(); //not first row
-		});
+    //searchBox jquery
+    $("#searchBox").keyup(function() {
+        $("tr:contains(" + $("#searchBox").val() + ")").show();
+        $("tr:not(:first):not(:contains(" + $("#searchBox").val() + "))").hide(); //not first row
+    });
 })
