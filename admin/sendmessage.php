@@ -7,12 +7,13 @@ $tableName = $_SESSION['tableName'];
 $primary = $_POST['primary'];
 $cname = $_POST['cname'];
 $ename = $_POST['ename'];
-$photoName;
-if ($_FILES['photoName']) {
+$photoName = '';
+echo 'trhe file name '.$_FILES['photoName']['name'];
+if (!empty($_FILES['photoName']['name'])) {
 	// check for standard uploading errors
 	($_FILES['photoName']['error'] == 0) or error($errors[$_FILES['photoName']['error']], $uploadForm);
 	//	get file name
-	$photoName = $_POST['photoName']['tmp_name'];
+	$photoName = $_FILES['photoName']['name'];
 	//	store the image
 	move_uploaded_file($_FILES['photoName']["tmp_name"] , '../img/'.$_FILES["photoName"]["name"]);
 }
@@ -21,13 +22,29 @@ $edescription = $_POST['edescription'];
 $category = $_POST['category'];
 $district = $_POST['district'];
 
-// if ($tableName == null ||
-// 	$primary == null ||
-// 	$cname == null ||
-// 	$ename == null) {
-// 	echo 'false';
-// }
-echo $tableName.'<br />';
-echo $conn->updateData($tableName, ['cname', 'ename', 'photoName', 'description', 'edescription', 'cid', 'did'], [$cname, $ename, $photoName, $description, $edescription, (int)$category, (int)$district], 'lid = '.$primary);
+//	check is not null, then push in
+$colArr = [];
+$dataArr = [];
+$i = 0;
+function pushColAsArray(&$colArr, &$dataArr, &$i, $col, $data){
+	if ($data != '' && $data != false) {
+		$colArr[$i] = $col;
+		$dataArr[$i] = $data;
+	}else{
+		return;
+	}
+	++$i;
+}
+
+pushColAsArray($colArr, $dataArr, $i, 'cname', $cname);
+pushColAsArray($colArr, $dataArr, $i, 'ename', $ename);
+pushColAsArray($colArr, $dataArr, $i, 'photoName', $photoName);
+pushColAsArray($colArr, $dataArr, $i, 'description', $description);
+pushColAsArray($colArr, $dataArr, $i, 'edescription', $edescription);
+pushColAsArray($colArr, $dataArr, $i, 'cid', $category);
+pushColAsArray($colArr, $dataArr, $i, 'did', $district);
+echo implode("|",$colArr).'<br />';
+echo implode("|", $dataArr).'<br />';
+echo $conn->updateData($tableName, $colArr, $dataArr, 'lid = '.$primary);
 
 ?>

@@ -52,7 +52,8 @@ $(function() {
     });
     $("#send").on("click", function() {
 
-        $("#send").replaceWith("<em>sending...</em>");
+        $("#send").after("<em id='send'>sending...</em>");
+        $('#send').hide();
 
         $.ajax({
             type: 'POST',
@@ -67,9 +68,14 @@ $(function() {
                 }else{
                     // alert('Failed')
                     alert(data);
+                    setTimeout("$.fancybox.close()", 1000);
                 }
             }
         });
+        setTimeout(function(){
+            $("#send").show();
+            $('#send').siblings('em').remove();
+        }, 1000);
 
     });
     //  popup box

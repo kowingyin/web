@@ -54,7 +54,7 @@
 <div id="inline">
 	<h2>Update data</h2><h2 style="font-size:12px;">Data won't change if there are any empty</h2>
 
-	<form id="contact" name="contact" action="#" method="post">
+	<form enctype="multipart/form-data" id="contact" name="contact" action="#" method="post">
 		<label for="primary">ID</label>
 		<input width="50px" type="text" name="primary" id="primary" readonly /><br>
 		<label for="cname">Chinese name</label>

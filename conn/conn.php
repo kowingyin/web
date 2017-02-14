@@ -136,30 +136,52 @@ public function sqlSelect($tableName, $colArr, $joinTableArr, $joinColArr, $join
 	*/
 	public function updateData($tableName, $colArr, $dataArr, $where){
 		//	check is null
-		if (!$tableName || !$colArr || !$dataArr || !$where) {
-			return 0;
+		if (!$tableName) {
+			return 'no table name';
+		}
+		if (!$colArr || !$dataArr || !$where) {
+			return 'no statement';
 		}
 		//	end of check is null
 
-		//	building  sql
+		//	building  sql, well tested
 		$sql = 'UPDATE '.$tableName.' SET ';
 
 		$colLength = count($colArr);
 		for ($i=0; $i < $colLength; $i++) {
 			$sql .= $colArr[$i] .' = ';
 			//	check is string?
-			$sql .= (!is_int($colArr[$i]))?'"':'';
+			$sql .= (!is_numeric($dataArr[$i]))?'"':'';
 			$sql .= $dataArr[$i];
-			$sql .= (!is_int($colArr[$i]))?'"':'';
-			if ($i < $colLength) {
+			$sql .= (!is_numeric($dataArr[$i]))?'"':'';
+			if ($i < $colLength-1) {
 				$sql .= ', ';
 			}
 		}
 		$sql .= ($where)?' WHERE '.$where:'';
 		$sql .= ';';
-		return $sql;
+		// return $sql;
 		//	end of building  sql
 
+
+		//	start updating
+		if (mysqli_query($this->conn, $sql)) {
+
+    		$rowsAffected = mysqli_affected_rows($this->conn);
+
+    		if ($rowsAffected == 0) {
+        		echo "No changes were made";
+    		} elseif ($rowsAffected == 1) {
+        		echo "Successfully updated 1 row";
+    		} elseif ($rowsAffected > 0) {
+        		echo "Successfully updated $rowsAffected rows";
+    		}
+
+		} else {
+
+    		echo "Error occurred: " . mysqli_error($this->conn);
+
+		}
 
 	}
 
